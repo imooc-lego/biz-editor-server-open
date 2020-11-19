@@ -1,0 +1,42 @@
+/**
+ * @description 模型同步到数据库，会清空并重置数据库！（暂时不用，先留着这个文件）同步数据尽量使用 ./sync-alter.js
+ * @author 双越老师
+ */
+
+// 注意，同步数据库，本地测试使用。线上环境不允许随意操作！！！
+
+const path = require('path')
+const prompt = require('prompt')
+const seq = require('../seq')
+
+console.warn('注意，本操作将清空并重置数据表。是否继续？Y/N')
+
+// 提示输入 y/n
+const key = 'Y/N'
+prompt.start()
+prompt.get(key, (err, result) => {
+    if (err) {
+        // 报错
+        console.error(err)
+        return
+    }
+    let val = result[key]
+    val = val.toLowerCase().trim()
+    if (val !== 'y') {
+        // 输入 n
+        return
+    }
+
+    // 获取所有的 seq model
+    // eslint-disable-next-line
+    require('require-all')({
+        dirname: path.resolve('src', 'models'), // src/models 中可能会有 mongodb 的 model ，不过这里获取了也没关系
+        filter: /\.js$/,
+        excludeDirs: /^\.(git|svn)$/,
+        recursive: true,
+    })
+
+    seq.sync({ force: true }).then(() => {
+        process.exit()
+    })
+})

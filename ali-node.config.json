@@ -1,0 +1,6 @@
+{
+    "appid": "123",
+    "secret": "xxx",
+    "logdir": "/tmp/editor-server",
+    "packages": "~/lego-team/biz-editor-server/package.json"
+}

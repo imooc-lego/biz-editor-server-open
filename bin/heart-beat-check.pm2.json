@@ -1,0 +1,14 @@
+{
+    "apps": [
+        {
+            "name": "heart-beat-check",
+            "script": "heart-beat-check/index.js",
+            "instances": 1,
+            "error_file": "./logs/heart-beat-check-err.log",
+            "out_file": "./logs/heart-beat-check-out.log",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
+            "combine_logs": true,
+            "max_memory_restart": "300M"
+        }
+    ]
+}

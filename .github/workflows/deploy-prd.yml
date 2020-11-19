@@ -1,0 +1,36 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+# github actions 中文文档 https://docs.github.com/cn/actions/getting-started-with-github-actions
+
+name: deploy production
+
+on:
+    push:
+        tags:
+            - 'v*.*.*'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: Use Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 12 # 尽量和线上机 node 版本保持一直
+            - name: lint and test # 测试
+              run: |
+                  npm i
+                  npm run lint
+                  npm run test:remote
+            - name: set ssh key # 临时设置 ssh key
+              run: |
+                  mkdir -p ~/.ssh/
+                  echo "${{secrets.WFP_ID_RSA}}" > ~/.ssh/id_rsa # secret 在这里配置 https://github.com/imooc-lego/biz-editor-server/settings/secrets
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan "${{secrets.IP165}}" >> ~/.ssh/known_hosts
+            - name: deploy # 部署
+              run: ssh work@${{secrets.IP165}} "bash -s" < bin/deploy.sh ${{secrets.WFP_PASSWORD}} ${{github.ref}}
+            - name: delete ssh key # 删除 ssh key
+              run: rm -rf ~/.ssh/id_rsa

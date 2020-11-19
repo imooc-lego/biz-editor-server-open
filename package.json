@@ -1,0 +1,90 @@
+{
+    "name": "biz-editor-server-open",
+    "version": "1.0.0",
+    "private": true,
+    "description": "B 端和编辑器 server",
+    "scripts": {
+        "start": "node bin/www",
+        "dev": "cross-env NODE_ENV=dev ./node_modules/.bin/nodemon bin/www --trace-warnings",
+        "prd-dev": "cross-env NODE_ENV=prd_dev pm2 start bin/pm2-prd-dev.config.js",
+        "prd": "cross-env NODE_ENV=production NODE_LOG_DIR=/tmp/editor-server ENABLE_NODE_LOG=YES pm2 start bin/pm2-prd.config.js",
+        "test:local": "cross-env NODE_ENV=test_local jest --runInBand  --passWithNoTests --colors --forceExit",
+        "test:remote": "cross-env NODE_ENV=test_remote jest --runInBand  --passWithNoTests --colors --forceExit",
+        "lint": "eslint \"src/**/*.{js,ts}\"",
+        "lint-fix": "eslint --fix \"src/**/*.{js,ts}\"",
+        "heart-beat-check": "pm2 start bin/heart-beat-check.pm2.json",
+        "release": "release-it",
+        "just-try-release": "release-it --dry-run"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/imooc-lego/biz-editor-server.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/imooc-lego/biz-editor-server/issues"
+    },
+    "homepage": "https://github.com/imooc-lego/biz-editor-server#readme",
+    "devDependencies": {
+        "@release-it/conventional-changelog": "^2.0.0",
+        "commitlint": "^11.0.0",
+        "commitlint-config-cz": "^0.13.2",
+        "cz-customizable": "^6.3.0",
+        "eslint": "^7.8.1",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-prettier": "^3.1.4",
+        "husky": "^4.3.0",
+        "jest": "^26.4.2",
+        "lint-staged": "^10.3.0",
+        "nodemon": "^1.8.1",
+        "prettier": "^2.1.1",
+        "release-it": "^14.2.1"
+    },
+    "dependencies": {
+        "ajv": "^6.12.5",
+        "ali-oss": "^6.11.2",
+        "axios": "^0.21.0",
+        "baidu-aip-sdk": "^2.4.6",
+        "cos-nodejs-sdk-v5": "^2.7.2",
+        "cron": "^1.8.2",
+        "cross-env": "^7.0.2",
+        "debug": "^2.6.3",
+        "formidable": "^1.2.2",
+        "jsonwebtoken": "^8.5.1",
+        "koa": "^2.2.0",
+        "koa-bodyparser": "^3.2.0",
+        "koa-convert": "^1.2.0",
+        "koa-helmet": "^6.0.0",
+        "koa-json": "^2.0.2",
+        "koa-jwt": "^4.0.0",
+        "koa-logger": "^2.0.1",
+        "koa-onerror": "^1.2.1",
+        "koa-router": "^7.1.1",
+        "koa-static": "^3.0.0",
+        "koa-views": "^5.2.1",
+        "koa2-cors": "^2.0.6",
+        "lodash": "^4.17.20",
+        "mongoose": "^5.10.4",
+        "mysql2": "^2.1.0",
+        "nodemailer": "^6.4.15",
+        "pm2": "^4.4.1",
+        "prompt": "^1.0.0",
+        "pug": "^2.0.0-rc.1",
+        "redis": "^3.0.2",
+        "require-all": "^3.0.0",
+        "sequelize": "^6.3.5",
+        "simple-git": "^2.20.1",
+        "supertest": "^6.0.0",
+        "tencentcloud-sdk-nodejs": "^3.0.263",
+        "uuid": "^8.3.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "node_modules/cz-customizable"
+        }
+    }
+}
